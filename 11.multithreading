@@ -1,0 +1,38 @@
+program:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h> //Header file for sleep(). man 3 sleep for details.
+#include <pthread.h>
+void *myThreadFun(void *vargp)
+{
+	sleep(1);
+	printf("Printing 111111 from Thread \n");
+	return NULL;
+}
+
+int main()
+{
+	pthread_t thread_id;
+	printf("Before Thread\n");
+	pthread_create(&thread_id, NULL, myThreadFun, NULL);
+	pthread_join(thread_id, NULL);
+	printf("After Thread\n");
+	printf("111111 thread\n");
+	exit(0);
+}
+
+
+output:
+
+Before Thread
+Printing 111111 from Thread
+After Thread
+111111 thread
+
+--------------------------------
+Process exited after 1.039 seconds with return value 0
+Press any key to continue . . .
+
+
+
