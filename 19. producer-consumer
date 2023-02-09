@@ -1,75 +1,99 @@
 program:
 
-#include <stdio.h > 	// header file
-#include <stdlib.h > 	// header file
+#include <stdio.h>
+#include <stdlib.h>
+int mutex = 1;
 
-int mutex = 1, full = 0, empty = 3, x = 0;
+int full = 0;
 
-int main()	// main code
-{
-  int n;
-  void producer();
-  void consumer();
-  int wait(int);
-  int signal(int);
-  printf("\n1.producer\n2.consumer\n3.for exit");
-  while (1)
-  {
-    printf("\n Please enter your choice:");
-    scanf("%d", &n);
-    switch (n)
-    {
-      case 1:
-        if ((mutex == 1) && (empty != 0))
-          producer();
-        else
-          printf("Oops!! the buffer is full!!");
-        break;
-      case 2:
-        if ((mutex == 1) && (full != 0))
-          consumer();
-        else
-          printf("Oops!! the buffer is empty!!");
-        break;
-      case 3:
-        exit(0);
-        break;
-    }
-  }
-
-  return 0;
-}
-
-int wait(int s)
-{
-  return (--s);
-}
-
-int signal(int s)
-{
-  return (++s);
-}
+int empty = 10, data = 0;
 
 void producer()
 {
-  mutex = wait(mutex);
-  full = signal(full);
-  empty = wait(empty);
-  x++;
-  printf("\nItem produced by the Producer %d", x);
-  mutex = signal(mutex);
+   
+    --mutex;
+
+    
+    ++full;
+
+  
+    --empty;
+
+
+    data++;
+
+    printf("\nProducer produces item number: %d\n", data);
+
+   
+    ++mutex;
 }
+
 
 void consumer()
 {
-  mutex = wait(mutex);
-  full = wait(full);
-  empty = signal(empty);
-  printf("\nItem consumed by the Consumer %d", x);
-  x--;
-  mutex = signal(mutex);
+    
+    --mutex;
+
+    
+    --full;
+
+   
+    ++empty;
+
+    printf("\nConsumer consumes item number: %d.\n", data);
+
+    data--;
+
+    ++mutex;
 }
 
+int main()
+{
+    int n, i;
+    printf("\n1. Enter 1 for Producer"
+           "\n2. Enter 2 for Consumer"
+           "\n3. Enter 3 to Exit");
+
+    for (i = 1; i > 0; i++)
+    {
+        printf("\nEnter your choice: ");
+        scanf("%d", &n);
+
+       
+        switch (n)
+        {
+        case 1:
+        
+            if ((mutex == 1) && (empty != 0))
+            {
+                producer();
+            }
+
+            else
+            {
+                printf("The Buffer is full. New data cannot be produced!");
+            }
+            break;
+
+        case 2:
+                       
+            if ((mutex == 1) && (full != 0))
+            {
+                consumer();
+            }
+            else
+            {
+                printf("The Buffer is empty! New data cannot be consumed!");
+            }
+            break;
+
+      
+        case 3:
+            exit(0);
+            break;
+        }
+    }
+}
 
 
 output:
