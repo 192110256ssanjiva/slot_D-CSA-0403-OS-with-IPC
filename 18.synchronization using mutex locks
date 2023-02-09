@@ -1,0 +1,53 @@
+program:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <unistd.h>
+
+#ifndef NUM_THREADS
+#define NUM_THREADS 4
+#endif
+
+int shared = 0;
+
+void *func3(void* param)
+{
+    printf("Incrementing the shared variable...\n");
+    for (int i = 0; i < 10000; ++i) {
+        shared += 1;
+    }
+    return 0;
+}
+
+int main()
+{
+    pthread_t threads[NUM_THREADS];
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        pthread_create(&threads[i], NULL, func3, NULL);
+    }
+
+    for (int i = 0; i < NUM_THREADS; ++i) {
+        pthread_join(threads[i], NULL);
+    }
+
+    printf("%d\n", shared);
+    exit(EXIT_SUCCESS);
+}
+
+
+output:
+
+Incrementing the shared variable...
+Incrementing the shared variable...
+Incrementing the shared variable...
+Incrementing the shared variable...
+40000
+
+--------------------------------
+Process exited after 0.02308 seconds with return value 0
+Press any key to continue . . .
+
+
+
