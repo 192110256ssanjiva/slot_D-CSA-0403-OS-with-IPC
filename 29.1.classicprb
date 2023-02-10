@@ -1,0 +1,56 @@
+program:
+
+#include <dirent.h>
+#include <stdio.h>
+
+int main(void) {
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(".");
+    if (d) {
+        while ((dir = readdir(d)) != NULL) {
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+    }
+    return 0;
+}
+
+
+output:
+
+
+
+
+
+cp problems.cpp
+cp problems.exe
+cpu fcfs.cpp
+cpu fcfs.exe
+cpu scheduling fcfs.txt
+credit.dat
+file
+hello.txt
+ipc message queuing.cpp
+ipc message queuing.exe
+ipc-cprogramm.cpp
+ipc-cprogramm.exe
+new.cpp
+new.exe
+non-preemtive sjf.cpp
+non-preemtive sjf.exe
+preemitive priority.cpp
+preemitive priority.exe
+priority.cpp
+priority.exe
+programs
+round robin.cpp
+round robin.exe
+sjf.cpp
+sjf.exe
+user id.txt
+
+--------------------------------
+Process exited after 0.02633 seconds with return value 0
+Press any key to continue . . .
+
